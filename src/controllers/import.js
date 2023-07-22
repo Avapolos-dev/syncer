@@ -19,4 +19,5 @@ const uploadArchive = async (req, res) => {
 
 module.exports = {
   run,
+  uploadArchive 
 };
