@@ -1,7 +1,7 @@
 
 import './Login.css'
 
-import { Routes, Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export const Login = () => {
   return (
@@ -13,7 +13,10 @@ export const Login = () => {
               <input type="email" name="email" id="email" placeholder="Digite seu email" />
               <label>Senha:</label>
               <input type="password" name="password" id="password" placeholder="Digite sua senha" />
-              <button type="submit">Entrar</button>
+              <Link to="/">
+                  <button type="submit">Entrar</button>
+              </Link>
+
               <p>Syncer</p>
             </div>
         </div>

@@ -47,6 +47,22 @@
         visibility: visible;
     }
 
+    .container-backgroud .panel  .drag-drop-area-lock{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 30vw;
+        height: 60vh;
+        margin: 0.5em;
+        /* border: 1px solid #f98113; */
+        border-radius: 5px;
+        overflow: auto;
+        background-color: #ffffffd5;
+        cursor: pointer;
+        visibility: hidden;
+    }
+
     .container-data {
         display: flex;
         flex-direction: column;
@@ -89,7 +105,6 @@
         width: 30vw;
         height: 7vh;
         border-radius: 10px;
-        margin: 0.5em;
         background-color: #ffffffd5;
     }
 
@@ -100,7 +115,7 @@
         width: 50%;
         height: 100%;
         border-radius: 10px;
-        background-color: #f98113;
+        cursor: pointer;
     }
 
     .container-backgroud .choice .choice-option-export{
@@ -110,7 +125,8 @@
         width: 50%;
         height: 100%;
         margin:0.1em;
-
+        border-radius: 10px;
+        cursor: pointer;
     }
 
 
