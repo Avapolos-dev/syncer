@@ -13,6 +13,22 @@ const run = async (req, res) => {
  * @param  {import('express').Request} req
  * @param  {import('express').Response} res
  */
+const list = async (req, res) => {
+  try {
+    const exports = await service.list()
+    console.log('Controler',exports)
+    res.json({ success: true, exports })
+  } catch(error) {
+    res.status(500).json({ success: false, message: error.message });
+    console.log(error)
+  }
+}
+
+
+/**
+ * @param  {import('express').Request} req
+ * @param  {import('express').Response} res
+ */
 const listByInstance = async (req, res) => {
   const instance = req.params.instance;
 
@@ -52,6 +68,7 @@ const getExportFromInstanceAndIteration = async (req, res) => {
 
 module.exports = {
   run,
+  list,
   listByInstance,
   getExportFromInstanceAndIteration,
 };

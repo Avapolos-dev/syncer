@@ -5,6 +5,8 @@ const router = express();
 
 // POST /export/run -> Run export
 router.post('/run', controller.run);
+// GET /export/ -> List exports
+router.get('/', controller.list);
 // GET /export/{instance} -> List exports by instance
 router.get('/:instance', controller.listByInstance);
 // GET /export/{instance}/{iteration} -> Get export archive by instance and iteration
