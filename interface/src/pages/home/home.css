@@ -59,8 +59,6 @@
         border-radius: 5px;
         overflow: auto;
         background-color: #ffffffd5;
-        cursor: pointer;
-        visibility: hidden;
     }
 
     .container-data {

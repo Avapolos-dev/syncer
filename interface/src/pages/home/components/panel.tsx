@@ -1,11 +1,16 @@
 import { useState } from 'react';
-
+import axios from 'axios';
 import { GetFile } from './getFile';
+
+
+import { LoadingOutlined } from "@ant-design/icons";
 
 export const Panel = () => {
     const [operation, setOperation] = useState('import');
     const [colorImport,setColorImport] = useState('#f98113');
     const [colorExport,setColorExport] = useState('#ffffffd5');
+    const [loading, setLoading] = useState(false);
+
         
     const handleImportClick = () => {
         setOperation('import');
@@ -19,6 +24,20 @@ export const Panel = () => {
         setColorExport('#f98113')
     }
 
+    const getExport = async () => {
+      setLoading(true);
+      await axios.post('http://localhost:3000/export/run');
+      setLoading(false);
+    }
+
+    const handleSubmit = () => {
+        if (operation === 'import') {
+            console.log('import')
+        }
+        else {
+          getExport();
+        }
+    }
   
     return (
         <div className="panel">
@@ -37,7 +56,21 @@ export const Panel = () => {
           {/* se a operação é de import, manda uma classe que mostra o elemento, se não manda uma que esconde*/}
           {operation === 'import' ? (
                 <GetFile className='drag-drop-area'/> 
-            ) : (<GetFile className='drag-drop-area-lock'/>)}
-          <button type="submit">Enviar</button>
+            ) : (
+                  <div className='drag-drop-area-lock'>
+                    {!loading && 
+                            <>
+                              <p>Clique em enviar para iniciar a exportação</p>
+                            </>
+                    }
+                    {loading && 
+                            <>
+                              <p>Exportando</p>
+                              <LoadingOutlined />
+                            </>
+                    }
+                  </div>
+                )}
+          <button onClick={handleSubmit} type="submit">Enviar</button>
         </div>
     )};

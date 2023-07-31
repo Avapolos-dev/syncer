@@ -1,6 +1,6 @@
 
 
-import { Instances } from './components/listInstances';
+import { Instances } from './components/Instances';
 import { Panel } from './components/panel'
 import './home.css';
 
