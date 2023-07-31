@@ -5,6 +5,10 @@ const app = express();
 const config = require('./config');
 const routes = require('./routes');
 const db = require('./db');
+const cors = require("cors");
+
+app.use(cors());
+
 
 app.use(helmet());
 
