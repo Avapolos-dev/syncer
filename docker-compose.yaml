@@ -128,6 +128,9 @@ services:
       MINIO_HOST: minio
       MINIO_ACCESS_KEY: minio
       MINIO_ACCESS_KEY_SECRET: minioadmin
+      SECRET: 1234567890
+      USER: admin@admin.com
+      PASSWORD: admin
     networks:
       db:
 
