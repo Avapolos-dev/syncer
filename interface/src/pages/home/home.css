@@ -24,6 +24,14 @@
         flex-direction: column;
 
     }
+    .container-backgroud .info button {
+        color: black;
+    }
+    .container-backgroud .info button:hover {
+        background-color: rgba(255, 255, 255, 0.445);
+    }
+  
+
    .container-backgroud .panel{
         display: flex;
         flex-direction: column;
@@ -144,6 +152,9 @@
         cursor: pointer;
     }
     
+    .container-backgroud .panel button:hover {
+        background-color: #e2750e;
+    }
 
     .container-data table {
         width: 100%; /* Definir largura da tabela como 100% */

@@ -1,9 +1,12 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Button } from 'antd';
 import {
   LoadingOutlined,
-  DownloadOutlined
+  DownloadOutlined,
+  UndoOutlined
 } from "@ant-design/icons";
+
 
 function formatarData(dataString: string): string {
   const data = new Date(dataString);
@@ -14,7 +17,12 @@ function formatarData(dataString: string): string {
   return `${dia}/${mes}/${ano}`;
 }
 
-type Instance = {
+
+type Props = {
+  load: boolean;
+}
+
+export type InstanceType = {
   id: number;
   instance: string;
   iteration: number;
@@ -22,31 +30,30 @@ type Instance = {
   created: string;
 }
 
-
-export const Instances = () => {
-    
-    const [instances, setInstances] = useState<Instance[]>([]);
+export const Instances = ( { load }:Props) => {
+    const [instances, setInstances] = useState<InstanceType[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    const handleDownload = ({id,instance,iteration}:Instance) => {
+    const handleDownload = ({instance,iteration}:InstanceType) => {
       instance = instance.replace(' ', '');
-      axios.get(`http://localhost:3000/export/${instance}/`, { responseType: 'blob', params:{id}} )
+      axios.get(`http://localhost:3000/export/${instance}/${iteration}`, { responseType: 'blob'} )
       .then((response) => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = url;
-        link.download = `${instance}-${iteration}.zip`; // Defina o nome do arquivo com a extensão .zip
+        link.setAttribute('download', `${instance}-${iteration}.tgz`); // Defina o nome do arquivo com a extensão .zip
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link); // Remova o elemento após o download
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         alert('Ocorreu um erro ao baixar o arquivo.')
       });
     };
-
-    useEffect(() => {
+    const loadingInstances = async () => {
+      setError(false);
       setLoading(true);
       axios.get('http://localhost:3000/export/')
       .then((response) => {
@@ -55,13 +62,22 @@ export const Instances = () => {
         });
         setInstances(response.data.exports.reverse());
         setLoading(false);
+        
       })
       .catch(() => {
-        setInstances([]);
         setError(true);
         setLoading(false);
       });
-    }, []);
+    };
+    
+    useEffect(() => {
+      if (load){
+        // espera uns segundos para dar tempo de levantar os container
+        setTimeout(() => {
+          loadingInstances();
+        }, 2000);
+      }
+    }, [load]);
 
     return (
         <div className='info'>
@@ -79,7 +95,8 @@ export const Instances = () => {
             <p className='header-col-title'>Data</p>
           </div>
           <div className='header-col'>
-            <p className='header-col-title'>Baixar</p>
+            <Button onClick={loadingInstances}  type="link" shape="circle" icon={<UndoOutlined />} disabled={!load} />
+            {/* <p className='header-col-title'><UndoOutlined /></p> */}
           </div>
         </div>
         <div className='container-table'>
@@ -100,7 +117,8 @@ export const Instances = () => {
                       <td>{instance.iteration}</td>
                       <td>{instance.operation}</td>
                       <td>{instance.created}</td>
-                      <td onClick={() => handleDownload(instance)}><DownloadOutlined /></td>
+                      <td><Button onClick={() => handleDownload(instance)} type="link" shape="circle" icon={<DownloadOutlined />} disabled={!load} /></td>
+                      {/* <td onClick={() => handleDownload(instance)}><DownloadOutlined /></td> */}
                     </tr>
                   ))}
                 </tbody>
