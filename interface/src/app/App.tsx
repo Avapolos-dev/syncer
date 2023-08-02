@@ -11,15 +11,20 @@ import { Login } from '../pages/auth/login'
 import { Header } from '../components/header/header'
 import { Footer } from '../components/footer/footer'
 
+// Context
+import { AuthProvider } from '../context/authContext'
+
 function App() {
   return (
     <div id="container-app" className='container-app'>
+       <AuthProvider>
         <Header />
-        <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="*" element={<Home />} />
-        </Routes>
+          <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Home />} />
+                <Route path="*" element={<Home />} />
+          </Routes>
+        </AuthProvider>
         <Footer />
     </div>
   )

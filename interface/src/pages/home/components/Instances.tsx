@@ -7,6 +7,7 @@ import {
   UndoOutlined
 } from "@ant-design/icons";
 
+import { useAuth  } from '../../../context/authContext'
 
 function formatarData(dataString: string): string {
   const data = new Date(dataString);
@@ -31,31 +32,35 @@ export type InstanceType = {
 }
 
 export const Instances = ( { load }:Props) => {
+    const context = useAuth()
+    const config = context?.generateAccess();
+   
     const [instances, setInstances] = useState<InstanceType[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
     const handleDownload = ({instance,iteration}:InstanceType) => {
       instance = instance.replace(' ', '');
-      axios.get(`http://localhost:3000/export/${instance}/${iteration}`, { responseType: 'blob'} )
-      .then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `${instance}-${iteration}.tgz`); // Defina o nome do arquivo com a extensão .zip
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link); // Remova o elemento após o download
-      })
-      .catch((error) => {
-        console.log(error);
-        alert('Ocorreu um erro ao baixar o arquivo.')
-      });
+
+      axios.get(`http://localhost:3000/export/${instance}/${iteration}`,
+        { responseType: 'blob', headers: config?.headers})
+        .then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', `${instance}-${iteration}.tgz`); // Defina o nome do arquivo com a extensão .zip
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link); // Remova o elemento após o download
+        })
+        .catch(() => {
+          alert('Ocorreu um erro ao baixar o arquivo.')
+        });
     };
     const loadingInstances = async () => {
       setError(false);
       setLoading(true);
-      axios.get('http://localhost:3000/export/')
+      axios.get('http://localhost:3000/export/',config)
       .then((response) => {
         response.data.exports.forEach((instance: any) => {
           instance.created = formatarData(instance.created);
@@ -64,7 +69,7 @@ export const Instances = ( { load }:Props) => {
         setLoading(false);
         
       })
-      .catch(() => {
+      .catch((err) => {
         setError(true);
         setLoading(false);
       });
@@ -72,6 +77,7 @@ export const Instances = ( { load }:Props) => {
     
     useEffect(() => {
       if (load){
+        setLoading(true);
         // espera uns segundos para dar tempo de levantar os container
         setTimeout(() => {
           loadingInstances();
@@ -95,7 +101,7 @@ export const Instances = ( { load }:Props) => {
             <p className='header-col-title'>Data</p>
           </div>
           <div className='header-col'>
-            <Button onClick={loadingInstances}  type="link" shape="circle" icon={<UndoOutlined />} disabled={!load} />
+            <Button onClick={loadingInstances}  type="link" shape="circle" icon={<UndoOutlined />} disabled={!load}  />
             {/* <p className='header-col-title'><UndoOutlined /></p> */}
           </div>
         </div>
@@ -117,7 +123,7 @@ export const Instances = ( { load }:Props) => {
                       <td>{instance.iteration}</td>
                       <td>{instance.operation}</td>
                       <td>{instance.created}</td>
-                      <td><Button onClick={() => handleDownload(instance)} type="link" shape="circle" icon={<DownloadOutlined />} disabled={!load} /></td>
+                      <td><Button onClick={() => handleDownload(instance)} type="link" shape="circle" icon={<DownloadOutlined />} disabled={!load}/></td>
                       {/* <td onClick={() => handleDownload(instance)}><DownloadOutlined /></td> */}
                     </tr>
                   ))}

@@ -4,15 +4,17 @@ import { GetFile } from './components/getFile';
 
 
 import { LoadingOutlined } from "@ant-design/icons";
+import { Navigate } from 'react-router-dom' 
 
 import { Instances } from './components/Instances';
-// import { Panel } from './components/panel'
+
 import './home.css';
 
-
+import { useAuth  } from '../../context/authContext'
 
 export const Home = () => {
-
+  const context = useAuth()
+  const config = context?.generateAccess();
   const [operation, setOperation] = useState('import');
   const [colorImport,setColorImport] = useState('#f98113');
   const [colorExport,setColorExport] = useState('#ffffffd5');
@@ -34,23 +36,38 @@ export const Home = () => {
 
   const getExport = async () => {
     setLoading(true);
-    await axios.post('http://localhost:3000/export/run').then(() => {
+    
+    const options = {
+      method: 'POST',
+      url: 'http://localhost:3000/export/run',
+      headers: {
+        Authorization: config?.headers.Authorization
+      }
+    };
+
+    axios.request(options).then(() => {
       setLoading(false);
     })
     .catch(() => {
       setError(true)
+      setLoading(false);
+      setTimeout(() => {
+        setError(false)
+      },10000)
     })
   }
 
   const handleSubmit = () => {
       if (operation === 'import') {
-          console.log('import')
+          alert('Ainda não implementado')
       }
       else {
         getExport();
       }
   }
   return (
+    <>
+    {!context?.isLogged() && <Navigate to='/login' /> }
     <div id="container-home" className="container">
       <div className="container-backgroud">
       <div className="panel">
@@ -73,7 +90,7 @@ export const Home = () => {
                     {error && 
                       <p>Erro ao exportar</p>      
                     }
-                    {!loading && 
+                    {!loading && !error && 
                               <p>Clique em enviar para iniciar a exportação</p>
                     }
                     {loading && !error && 
@@ -90,6 +107,7 @@ export const Home = () => {
       <Instances load={!loading} />
       </div>
     </div>
+    </>
   )
 }
 
