@@ -81,7 +81,7 @@ export const Instances = ( { load }:Props) => {
         // espera uns segundos para dar tempo de levantar os container
         setTimeout(() => {
           loadingInstances();
-        }, 2000);
+        }, 5000);
       }
     }, [load]);
 
