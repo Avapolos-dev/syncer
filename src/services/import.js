@@ -6,7 +6,7 @@ const { Pool } = require("pg");
 const objstore = require('./objstore')
 const container = require('./container');
 
-const db = new Pool(config.db)
+const { client:db, waitForHealthy } = require('../db');
 
 const getLastImport = async() => {
   const sql = `SELECT max(iteration) FROM avapolos_sync WHERE instance='${config.instance}' AND operation='I'`;
