@@ -69,7 +69,7 @@ export const Instances = ( { load }:Props) => {
         setLoading(false);
         
       })
-      .catch((err) => {
+      .catch(() => {
         setError(true);
         setLoading(false);
       });
