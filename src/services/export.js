@@ -27,6 +27,13 @@ const listByInstance = async (instance) => {
   return result
 }
 
+const list = async () => {
+  const sql = `SELECT * FROM avapolos_sync WHERE operation='E';`
+  const result = (await db.query(sql)).rows;
+  return result
+}
+
+
 const resolveExportName = (instance, iteration) => `${instance}.${iteration}.tgz`;
 
 // (C=clonagem, E=export, I=import)
@@ -130,6 +137,7 @@ module.exports = {
   getNextExport,
   resolveExportName,
   run,
+  list,
   listByInstance,
   getExportFromInstanceAndIteration,
 };

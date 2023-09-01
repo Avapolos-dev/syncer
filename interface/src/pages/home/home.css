@@ -1,0 +1,168 @@
+    .container-data::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .container-home {
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        height: 100vh;
+    }
+    .container-backgroud {
+        display: flex;
+        flex-direction: row;
+        height: 90vh;
+        justify-content: space-around;
+        align-items: center;
+        background-image: linear-gradient(to top, rgba(37, 40, 42, 1), rgba(37, 40, 42, 0.9), rgba(37, 40, 42, 0.8), rgba(37, 40, 42, 0.7), rgba(37, 40, 42, 0.6));
+    }
+
+    .container-backgroud .info{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+    }
+    .container-backgroud .info button {
+        color: black;
+    }
+    .container-backgroud .info button:hover {
+        background-color: rgba(255, 255, 255, 0.445);
+    }
+  
+
+   .container-backgroud .panel{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+}   
+
+    .container-backgroud .panel  .drag-drop-area{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 30vw;
+        height: 60vh;
+        margin: 0.5em;
+        /* border: 1px solid #f98113; */
+        border-radius: 5px;
+        overflow: auto;
+        background-color: #ffffffd5;
+        cursor: pointer;
+        visibility: visible;
+    }
+
+    .container-backgroud .panel  .drag-drop-area-lock{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 30vw;
+        height: 60vh;
+        margin: 0.5em;
+        /* border: 1px solid #f98113; */
+        border-radius: 5px;
+        overflow: auto;
+        background-color: #ffffffd5;
+    }
+
+    .container-data {
+        display: flex;
+        flex-direction: column;
+        width: 30vw;
+        height: 70vh;
+        /* border: 1px solid #f98113; */
+        border-radius: 10px;
+        overflow: auto;
+        background-color: #ffffffd5;
+    }
+
+    .container-backgroud .header{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 30vw;
+        height: 7vh;
+        border-radius: 10px;
+        margin: 0.5em;
+        background-color: #ffffffd5;
+    }
+    
+    .container-backgroud .header .header-col{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 25%;
+        height: 80%;
+        margin:0.1em;
+    }
+    .container-backgroud .header .header-col .header-col-title{
+        font-size: 0.8em;
+        font-weight: bold;
+    }
+
+    .container-backgroud .choice{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 30vw;
+        height: 7vh;
+        border-radius: 10px;
+        background-color: #ffffffd5;
+    }
+
+    .container-backgroud .choice .choice-option-import{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        height: 100%;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .container-backgroud .choice .choice-option-export{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        height: 100%;
+        margin:0.1em;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+
+    .container-backgroud .choice  .choice-option-title{
+        font-size: 0.8em;
+        font-weight: bold;
+    }
+
+    .container-backgroud .panel button {
+        width: 30vw;
+        height: 40px;
+        background-color: #f98113;
+        font-weight: bold;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    
+    .container-backgroud .panel button:hover {
+        background-color: #e2750e;
+    }
+
+    .container-data table {
+        width: 100%; /* Definir largura da tabela como 100% */
+        table-layout: fixed; /* Fixar largura das células da tabela */
+    }
+    
+    .container-data th, .container-data td {
+        text-align: center;
+        height: 50px; /* Altura fixa de 50 pixels para as células da tabela */
+
+    }

@@ -1,0 +1,16 @@
+header{
+    display: flex;
+    padding: 1em 0em 1em 2em; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+header img {
+    width: 25vh;
+    height: 8vh;
+}
+
+header button {
+    margin: 1em;
+    color: #f98113;
+}

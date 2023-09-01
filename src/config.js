@@ -19,7 +19,10 @@ const config = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
   },
-  port: 3000
+  port: 3000,
+  secret: process.env.SECRET,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
 }
 
 module.exports = config;
