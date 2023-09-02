@@ -21,7 +21,7 @@ const uploadArchive = () => {
 const checkUploadArchive = async (req, res) => {
   if (!req.file) 
     return res.status(400).json({ success: false, message: 'you need to provide an import archive.'});
-  await serviceMulter.putUploadOnMinio(req)
+  await serviceMulter.putUploadToMinio(req)
   return res.status(200).json({ success: true, message: 'Success.'});
 };
 

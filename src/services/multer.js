@@ -18,11 +18,11 @@ const importUploader = multer({storage: multer.diskStorage({
   }})
 });
 
-const putStreamUploadOnMinio = async (req) => {
+const putStreamUploadToMinio = async (req) => {
   await objstore.putStream(config.minio.importsBucket, req.file.originalname, req.file.buffer);
 };
 
-const putUploadOnMinio = async (req) => {
+const putUploadToMinio = async (req) => {
   await objstore.put(config.minio.importsBucket, req.file.filename, req.file.path);
   console.log(req.file.destination);
   await fs.unlink(req.file.path);
@@ -32,6 +32,6 @@ const putUploadOnMinio = async (req) => {
 module.exports = {
   importStreamUploader,
   importUploader,
-  putStreamUploadOnMinio,
-  putUploadOnMinio
+  putStreamUploadToMinio,
+  putUploadToMinio
 };
