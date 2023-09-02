@@ -11,7 +11,7 @@ const run = async (req, res) => {
 };
 
 const uploadArchive = () => {
-  return serviceMulter.importUploader.single('archive');
+  return serviceMulter.importUploader.single('file');
 };
 
 /**

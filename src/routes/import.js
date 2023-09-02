@@ -8,7 +8,7 @@ const router = express();
 router.post('/run', controller.run);
 
 // POST /import -> upload import archive
-router.post('/', controller.uploadArchive('archive'), controller.checkUploadArchive);
+router.post('/', controller.uploadArchive('file'), controller.checkUploadArchive);
 
 // GET /export/{instance} -> List exports by instance
 // router.get('/:instance', controller.listByInstance);
