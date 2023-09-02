@@ -1,15 +1,14 @@
 const express = require('express');
-const multer  = require('multer')
 const controller = require('../controllers/import');
+const service  = require('../services/multer');
 
 const router = express();
 
 // POST /import/run -> Run import
-const importUploader = multer();
 router.post('/run', controller.run);
 
 // POST /import -> upload import archive
-router.post('/', importUploader.single('archive'), controller.uploadArchive);
+router.post('/', controller.uploadArchive('archive'), controller.checkUploadArchive);
 
 // GET /export/{instance} -> List exports by instance
 // router.get('/:instance', controller.listByInstance);

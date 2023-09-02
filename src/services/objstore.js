@@ -1,5 +1,5 @@
-const Minio = require('minio')
-const config = require('../config')
+const Minio = require('minio');
+const config = require('../config');
 
 // Instantiate the minio client with the endpoint
 // and access keys as shown below.
@@ -12,43 +12,49 @@ const minio = new Minio.Client({
 });
 
 const makeBucketIfNotExists = async (name) => {
-  const exists = await minio.bucketExists(name)
-  if (!exists) await minio.makeBucket(name)
-}
+  const exists = await minio.bucketExists(name);
+  if (!exists) await minio.makeBucket(name);
+};
 
 const put = async (bucket, name, path) => {
-  await makeBucketIfNotExists(bucket)
-  return await minio.fPutObject(bucket, name, path)
-}
+  await makeBucketIfNotExists(bucket);
+  return await minio.fPutObject(bucket, name, path);
+};
 
 const get = async (bucket, name, path) => {
-  return await minio.fGetObject(bucket, name, path)
-}
+  return await minio.fGetObject(bucket, name, path);
+};
+
+const putStream = async (bucket, name, stream) => {
+  await makeBucketIfNotExists(bucket);
+  return await minio.putObject(bucket, name, stream);
+};
 
 const getStream = async (bucket, name) => {
-  return await minio.getObject(bucket, name)
-}
+  return await minio.getObject(bucket, name);
+};
 
 const has = async(bucket, name) => {
   try {
-    await minio.statObject(bucket, name)
+    await minio.statObject(bucket, name);
     return true;
   } catch {
     return false;
-  }
-}
+  };
+};
 
 const getDownloadURL = async (bucket, name) => {
   // 1 day timeout
   const timeout = 86400;
   return await minio.presignedGetObject(bucket, name, timeout);
-}
+};
 
 // Colocar o content-type
 
 module.exports = {
   put,
   get,
+  putStream,
   getStream,
   has,
   getDownloadURL
