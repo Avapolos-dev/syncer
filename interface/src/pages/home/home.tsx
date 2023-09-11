@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { GetFile } from './components/getFile';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { LoadingOutlined } from "@ant-design/icons";

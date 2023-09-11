@@ -36,7 +36,7 @@ export const GetFile = ({ token, className }:GetFile) => {
     
         axios
           .request(options)
-          .then(function (response) {
+          .then(function () {
             toast.success('Importação realizada com sucesso')
             setSelectedFile(null)
           })
