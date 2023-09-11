@@ -2,6 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import { GetFile } from './components/getFile';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { LoadingOutlined } from "@ant-design/icons";
 import { Navigate } from 'react-router-dom' 
@@ -58,16 +60,14 @@ export const Home = () => {
   }
 
   const handleSubmit = () => {
-      if (operation === 'import') {
-          alert('Ainda não implementado')
-      }
-      else {
+      if (operation === 'export') {
         getExport();
       }
   }
   return (
     <>
     {!context?.isLogged() && <Navigate to='/login' /> }
+    <ToastContainer />
     <div id="container-home" className="container">
       <div className="container-backgroud">
       <div className="panel">
@@ -84,8 +84,9 @@ export const Home = () => {
             </div>
           </div>
           {operation === 'import' ? (
-                <GetFile className='drag-drop-area'/> 
+                <GetFile token={config?.headers.Authorization} className='drag-drop-area'/> 
             ) : (
+                  <>
                   <div className='drag-drop-area-lock'>
                     {error && 
                       <p>Erro ao exportar</p>      
@@ -100,8 +101,9 @@ export const Home = () => {
                             </>
                     }
                   </div>
+                  <button onClick={handleSubmit} type="submit">Enviar</button>
+                  </>
                 )}
-          <button onClick={handleSubmit} type="submit">Enviar</button>
       </div>
       {/* Quando estiver exportando, não é para carregar os dados */}
       <Instances load={!loading} />

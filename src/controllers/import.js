@@ -19,6 +19,8 @@ const uploadArchive = () => {
  * @param  {import('express').Response} res
  */
 const checkUploadArchive = async (req, res) => {
+  console.log('Arquivo recebido',req.file);
+
   if (!req.file) 
     return res.status(400).json({ success: false, message: 'you need to provide an import archive.'});
   await serviceMulter.putUploadToMinio(req)
