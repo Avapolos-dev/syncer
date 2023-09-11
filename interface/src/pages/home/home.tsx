@@ -2,6 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import { GetFile } from './components/getFile';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { LoadingOutlined } from "@ant-design/icons";
 import { Navigate } from 'react-router-dom' 
@@ -57,38 +59,15 @@ export const Home = () => {
     })
   }
 
-  const getImport = async () => {
-    const form = new FormData();
-    form.append("file", "D:\\arquivos\\estagio\\database\\cifar10_small.zip");
-
-    const options = {
-      method: 'POST',
-      url: 'http://localhost:3000/import/',
-      headers: {
-        'Content-Type': 'multipart/form-data; boundary=---011000010111000001101001',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY5NDQzMTA2NiwiZXhwIjoxNjk0NTE3NDY2fQ.5hbq8-pLSm-edUiMyvKRhoQZyH-U79aOht1fjvxuqs4'
-      },
-      data: '[form]'
-    };
-
-    axios.request(options).then(function (response) {
-      console.log(response.data);
-    }).catch(function (error) {
-      console.error(error);
-    });
-  }
   const handleSubmit = () => {
-      if (operation === 'import') {
-        console.log('import')
-        //getImport();
-      }
-      else {
+      if (operation === 'export') {
         getExport();
       }
   }
   return (
     <>
     {!context?.isLogged() && <Navigate to='/login' /> }
+    <ToastContainer />
     <div id="container-home" className="container">
       <div className="container-backgroud">
       <div className="panel">
@@ -107,6 +86,7 @@ export const Home = () => {
           {operation === 'import' ? (
                 <GetFile token={config?.headers.Authorization} className='drag-drop-area'/> 
             ) : (
+                  <>
                   <div className='drag-drop-area-lock'>
                     {error && 
                       <p>Erro ao exportar</p>      
@@ -121,8 +101,9 @@ export const Home = () => {
                             </>
                     }
                   </div>
+                  <button onClick={handleSubmit} type="submit">Enviar</button>
+                  </>
                 )}
-          <button onClick={handleSubmit} type="submit">Enviar</button>
       </div>
       {/* Quando estiver exportando, não é para carregar os dados */}
       <Instances load={!loading} />

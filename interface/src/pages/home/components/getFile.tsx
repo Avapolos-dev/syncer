@@ -1,4 +1,5 @@
-import { ChangeEvent, DragEvent, useRef, useState, useEffect } from 'react';
+import { ChangeEvent, DragEvent, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 import axios from "axios";
 
 type GetFile = {
@@ -18,8 +19,7 @@ export const GetFile = ({ token, className }:GetFile) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const uploadFile = ({ file }: Upload) => {
-      console.log('enviando arquivo...');
-    
+     
       if (file) {
         const formData = new FormData();
         formData.append("file", file);
@@ -37,10 +37,13 @@ export const GetFile = ({ token, className }:GetFile) => {
         axios
           .request(options)
           .then(function (response) {
-            console.log(response.data);
+            toast.success('Importação realizada com sucesso')
+            setSelectedFile(null)
           })
           .catch(function (error) {
             console.log('erro ao enviar arquivo', error);
+            toast.error('Erro ao enviar arquivo')
+            setSelectedFile(null)
           });
       }
     };
@@ -57,7 +60,6 @@ export const GetFile = ({ token, className }:GetFile) => {
       if (file) {
         setSelectedFile(file);
         // Faça o que precisa ser feito com o arquivo aqui (por exemplo, exibir informações ou fazer upload)
-        console.log('Capitando arquivo selecionado por drop')
         uploadFile({file})
       }
     };
@@ -66,7 +68,6 @@ export const GetFile = ({ token, className }:GetFile) => {
       const file = event.target.files?.[0] || null;
       setSelectedFile(file);
       // Faça o que precisa ser feito com o arquivo aqui (por exemplo, exibir informações ou fazer upload)
-      console.log('Capitando arquivo selecionado')
       uploadFile({file})
     };
   

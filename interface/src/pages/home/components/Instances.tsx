@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Button } from 'antd';
+import { toast } from 'react-toastify';
 import {
   LoadingOutlined,
   DownloadOutlined,
@@ -54,7 +55,7 @@ export const Instances = ( { load }:Props) => {
           document.body.removeChild(link); // Remova o elemento após o download
         })
         .catch(() => {
-          alert('Ocorreu um erro ao baixar o arquivo.')
+          toast.error('Ocorreu um erro ao baixar o arquivo.')
         });
     };
     const loadingInstances = async () => {
