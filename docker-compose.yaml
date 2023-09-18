@@ -115,6 +115,11 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
       # - .:/app
+    depends_on:
+      - moodle
+      - minio
+      - main-db
+      - sync-db
     ports:
       - 3000:3000
     environment:
